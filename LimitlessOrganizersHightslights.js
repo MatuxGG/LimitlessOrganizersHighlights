@@ -2,7 +2,7 @@
 // @name         Highlight Organizer with Configurable Settings
 // @namespace    http://tampermonkey.net/
 // @version      1.0
-// @description  Met en surbrillance les lignes des tournois en fonction de l'organisateur
+// @description  Highlights tournament rows based on the organizer
 // @author       Matux
 // @match        *://*/*
 // @grant        none
@@ -11,11 +11,11 @@
 (function() {
     'use strict';
 
-    // Configuration globale des organisateurs
+    // Global configuration for organizers
     const config = {
         organizers: {
             'PTCGP FRANCE': 'lightgreen',
-            // Ajouter des lignes ici
+            // Add more organizers here
         },
         pages: [
             {
@@ -36,37 +36,37 @@
             'completed-tournaments',
             'upcoming-tournaments'
         ],
-        organizerHeaderText: 'Organizer' // Texte de l'en-tête de la colonne pour la recherche
+        organizerHeaderText: 'Organizer' // Header text of the column to search for
     };
 
-    // Attendre que la page soit complètement chargée
+    // Wait for the page to fully load
     window.addEventListener('load', function() {
         console.log('Script LimitlessOrganizersHighlights by Matux');
 
-        // Déterminer la configuration de la page actuelle
+        // Determine the configuration for the current page
         const currentUrl = window.location.href;
         const pageConfig = config.pages.find(page => currentUrl.includes(page.urlPart));
 
         if (!pageConfig) {
-            console.log('URL non reconnue, le script ne s\'appliquera pas.');
+            console.log('Unrecognized URL, the script will not run.');
             return;
         }
 
-        console.log(`Page reconnue : ${pageConfig.urlPart}`);
-        console.log(`Recherche des classes de tables configurées : ${config.tableClasses.join(', ')}`);
+        console.log(`Page recognized: ${pageConfig.urlPart}`);
+        console.log(`Searching for configured table classes: ${config.tableClasses.join(', ')}`);
 
-        // Parcourir toutes les classes de tables configurées
+        // Loop through all configured table classes
         config.tableClasses.forEach(tableClass => {
             const tables = document.querySelectorAll(`.${tableClass}`);
-            console.log(`Nombre de tables trouvées avec la classe "${tableClass}" : ${tables.length}`);
+            console.log(`Number of tables found with the class "${tableClass}": ${tables.length}`);
 
             tables.forEach((table, tableIndex) => {
-                console.log(`Traitement de la table ${tableIndex + 1} avec la classe "${tableClass}"`);
+                console.log(`Processing table ${tableIndex + 1} with class "${tableClass}"`);
 
-                // Trouver l'index de la colonne "Organizer" dans le premier tr du tbody
+                // Find the index of the "Organizer" column in the first tr of the tbody
                 const headerRow = table.querySelector('tbody tr');
                 if (!headerRow) {
-                    console.log(`Pas de ligne d'en-tête trouvée dans la table ${tableIndex + 1} avec la classe "${tableClass}"`);
+                    console.log(`No header row found in table ${tableIndex + 1} with class "${tableClass}"`);
                     return;
                 }
 
@@ -75,45 +75,45 @@
                 headerCells.forEach((cell, index) => {
                     if (cell.innerText.trim() === config.organizerHeaderText) {
                         organizerColumnIndex = index;
-                        console.log(`Colonne "${config.organizerHeaderText}" trouvée à l'index ${organizerColumnIndex} dans la table ${tableIndex + 1}`);
+                        console.log(`Column "${config.organizerHeaderText}" found at index ${organizerColumnIndex} in table ${tableIndex + 1}`);
                     }
                 });
 
                 if (organizerColumnIndex === -1) {
-                    console.log(`Colonne avec l'en-tête "${config.organizerHeaderText}" non trouvée dans la table ${tableIndex + 1}`);
+                    console.log(`Column with header "${config.organizerHeaderText}" not found in table ${tableIndex + 1}`);
                     return;
                 }
 
-                // Parcourir les lignes du corps de la table en sautant la première (en-tête)
+                // Loop through the body rows of the table, skipping the first (header)
                 const rows = table.querySelectorAll('tbody tr:not(:first-child)');
-                console.log(`Nombre de lignes trouvées dans la table ${tableIndex + 1} (sans l'en-tête) : ${rows.length}`);
+                console.log(`Number of rows found in table ${tableIndex + 1} (excluding the header): ${rows.length}`);
 
                 rows.forEach((row, rowIndex) => {
-                    // Sélectionner toutes les cellules de la ligne
+                    // Select all cells in the row
                     const cells = row.querySelectorAll('td');
 
-                    // Vérifier la cellule "Organizer" selon l'index trouvé
+                    // Check the "Organizer" cell based on the found index
                     const organizerCell = cells[organizerColumnIndex];
                     if (organizerCell) {
                         const organizerText = organizerCell.innerText.trim();
-                        console.log(`Contenu de la cellule "Organizer" de la ligne ${rowIndex + 1} : ${organizerText}`);
+                        console.log(`Content of "Organizer" cell in row ${rowIndex + 1}: ${organizerText}`);
 
-                        // Vérifier si l'organisateur correspond à l'une des valeurs configurées
+                        // Check if the organizer matches any configured values
                         if (config.organizers.hasOwnProperty(organizerText)) {
-                            // Appliquer la couleur configurée à chaque cellule de la ligne
+                            // Apply the configured color to each cell in the row
                             const color = config.organizers[organizerText];
                             cells.forEach(cell => {
                                 cell.style.setProperty('background-color', color, 'important');
                             });
-                            console.log(`Ligne ${rowIndex + 1} mise en surbrillance (organisateur : ${organizerText}, couleur : ${color})`);
+                            console.log(`Row ${rowIndex + 1} highlighted (organizer: ${organizerText}, color: ${color})`);
                         }
                     } else {
-                        console.log(`Cellule "Organizer" non trouvée dans la ligne ${rowIndex + 1}`);
+                        console.log(`"Organizer" cell not found in row ${rowIndex + 1}`);
                     }
                 });
             });
         });
 
-        console.log('Script terminé.');
+        console.log('Script finished.');
     });
 })();
