@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Highlight Organizer with Configurable Settings
+// @name         Limitless Organizer Highlight
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  Highlights tournament rows based on the organizer
