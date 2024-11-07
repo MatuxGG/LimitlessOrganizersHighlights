@@ -22,3 +22,11 @@ organizers: {
 },
 ```
 - Last, click on "Reinstall" to finish the setup :)
+
+# (Optionnal) Set up auto updates
+
+You can enable auto updates for this script by following these steps:
+- Click on "Edit" for this script.
+- Click on "Settings" tab.
+- In "Updates" section, enter "https://raw.githubusercontent.com/MatuxGG/LimitlessOrganizersHighlights/refs/heads/main/LimitlessOrganizersHightslights.js".
+- Last, click on "Save" to finish the setup :)
