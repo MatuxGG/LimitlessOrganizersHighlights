@@ -10,4 +10,4 @@ Install [Tampermonkey](https://www.tampermonkey.net/) extension for your browser
 
 # Usage
 
-In Tampermonkey extension, click on "Add a new userscript" and insert the script of this repository available [here](LimitlessOrganizersHightslights.js)
+In Tampermonkey extension, click on "Add a new userscript" and insert the script of this repository available [here](https://gist.github.com/MatuxGG/d4556185bd8655c66a20f949dfbf98b2.js)
