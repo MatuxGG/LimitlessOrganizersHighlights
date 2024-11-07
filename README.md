@@ -10,4 +10,15 @@ Install [Tampermonkey](https://www.tampermonkey.net/) extension for your browser
 
 # Usage
 
-In Tampermonkey extension, click on "Add a new userscript" and insert the script of this repository available [here](https://gist.github.com/MatuxGG/d4556185bd8655c66a20f949dfbf98b2.js)
+In Tampermonkey extension, follow there steps:
+- Click on "Create a new script...".
+- Click on utilities tab
+- In "Import from URL" (bottom of the page), insert "https://raw.githubusercontent.com/MatuxGG/LimitlessOrganizersHighlights/refs/heads/main/LimitlessOrganizersHightslights.js" and click "Install".
+- Then you can preview the user script. You can configurate organizers as you wish. You can add as many lines as you want, with the organizer name on left and the color (lightgreen, lightblue, #ffffff, etc...) of the found lines.
+```
+organizers: {
+    'PTCGP FRANCE': 'lightgreen',
+    // Add lines here
+},
+```
+- Last, click on "Reinstall" to finish the setup :)
